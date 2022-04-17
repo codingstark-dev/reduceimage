@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { stringify } from "querystring";
 import imgResize from './../../lib/image/image';
 import img from "/pageid.png"
-import formidable from "formidable"
+import formidable from "formidable";
 // const formidable = require('formidable');
 import sharp from "sharp"
 
@@ -36,6 +36,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		form.parse(req, async (err, fields, files) => {
 			if (err) {
+				console.log(err)
 				return;
 			}
 			console.log(files.image['filepath']);
@@ -43,17 +44,32 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 			const contentType = files.image['mimetype'];
 			// res.send(files);contentType[0].type
-			console.log(color)
-			await sharp(imageInput)
-				.resize(width, height,)
-				.toFormat(format === 'png' ? 'png' : format == "gif" ? 'gif' : "jpeg").flatten({ background: `${"#"+color}` })
-				.toBuffer()
-				.then((data) => {
-					const base64Data = data.toString('base64');
-					res.status(202).json({ b64Data: base64Data, contentType: contentType[0].type, extension: format === 'png' ? 'png' : format == "gif" ? 'gif' : "jpeg" });
-					// res.send(base64Data);
-				})
-				.catch((err) => console.log(err));
+			console.log(format)
+			if (color == "0") {
+
+				await sharp(imageInput)
+					.resize(width, height,)
+					.toFormat(format as unknown as keyof sharp.FormatEnum, { quality: parseInt(quality as string) })
+					.toBuffer()
+					.then((data) => {
+						const base64Data = data.toString('base64');
+						res.status(202).json({ b64Data: base64Data, contentType: contentType[0].type, extension: format});
+						// res.send(base64Data);
+					})
+					.catch((err) => console.log(err));
+			} else {
+				await sharp(imageInput)
+					.resize(width, height,)
+					.toFormat(format === 'png' ? 'png' : format == "gif" ? 'gif' : "jpeg", { quality: parseInt(quality as string) }).flatten({ background: `${"#" + color}` })
+					.toBuffer()
+					.then((data) => {
+						const base64Data = data.toString('base64');
+						res.status(202).json({ b64Data: base64Data, contentType: contentType[0].type, extension: format === 'png' ? 'png' : format == "gif" ? 'gif' : "jpeg" });
+						// res.send(base64Data);
+					})
+					.catch((err) => console.log(err));
+			}
+
 		});
 
 	} catch (error) {

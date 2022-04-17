@@ -11,7 +11,7 @@ const fontSerifCJK = !CJK()
 module.exports = {
   mode: "jit",
   // purge: ["./pages/**/*.js", "./components/**/*.js"],
-  purge: [
+  content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./layouts/**/*.{js,ts,jsx,tsx}",
@@ -42,7 +42,7 @@ module.exports = {
       },
       backgroundImage: {
         "split-white-black":
-          "linear-gradient(to bottom, #603cb6 60% , white 40%);",
+          "linear-gradient(to bottom, #1d4ed8 60% , white 40%);",
       },
     },
   },
