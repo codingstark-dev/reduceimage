@@ -6,6 +6,8 @@ import fileDownload from "js-file-download";
 import React, { useState } from "react";
 import { FileWithPath } from "react-dropzone";
 import Resizer from "react-image-file-resizer";
+import { login, logout } from "../context/authcontext";
+
 enum color {
   black = "000000",
   white = "ffffff",
@@ -124,6 +126,8 @@ function reduce() {
   let finalFormat = ["jpeg", "jpg", "png", "webp", "heif", "gif", "tiff", "svg", "avif","heic"];
   return (
     <div>
+      <button onClick={login}> Login </button>
+      <button onClick={logout}> Logout </button>
       {/* <div className="flex flex-col items-center justify-center min-h-screen py-2">
       </div> */}
       {/* <Sidebar /> */}

@@ -24,6 +24,7 @@
     "b64-to-blob": "^1.2.19",
     "clsx": "^1.1.1",
     "feed": "^4.2.2",
+    "firebase": "^9.6.11",
     "formidable": "^2.0.1",
     "formidable-serverless": "^1.1.1",
     "gitalk": "^1.7.2",
