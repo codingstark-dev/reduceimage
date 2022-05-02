@@ -42,7 +42,7 @@ module.exports = {
       },
       backgroundImage: {
         "split-white-black":
-          "linear-gradient(to bottom, #1d4ed8 60% , white 40%);",
+          "linear-gradient(to bottom, #1d4ed8 60% , transparent 40%);",
       },
     },
   },

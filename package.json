@@ -20,6 +20,8 @@
     "postbuild": "next-sitemap --config next-sitemap.config.js"
   },
   "dependencies": {
+    "@headlessui/react": "^1.5.0",
+    "@heroicons/react": "^1.0.6",
     "axios": ">=0.21.1",
     "b64-to-blob": "^1.2.19",
     "clsx": "^1.1.1",
@@ -31,6 +33,7 @@
     "js-file-download": "^0.4.12",
     "micro": "^9.3.4",
     "next": "12.1.5",
+    "next-themes": "^0.1.1",
     "node-cache": "^5.1.2",
     "notion-client": "6.11.0",
     "notion-utils": "6.11.0",
@@ -40,6 +43,7 @@
     "react-device-detect": "2.2.2",
     "react-dom": "18.0.0",
     "react-dropzone": "12.0.5",
+    "react-firebase-hooks": "^5.0.3",
     "react-google-recaptcha": "^2.1.0",
     "react-image-file-resizer": "^0.4.7",
     "react-notion-x": "6.11.0",
