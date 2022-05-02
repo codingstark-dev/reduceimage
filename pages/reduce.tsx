@@ -3,17 +3,31 @@ import b64toBlob from "b64-to-blob";
 import Dropzone from "components/dropbox";
 import Sidebar from "components/silder";
 import fileDownload from "js-file-download";
-import React, { useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { FileWithPath } from "react-dropzone";
 import Resizer from "react-image-file-resizer";
 import { login, logout } from "../context/authcontext";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
+import { Dialog, Transition } from '@headlessui/react'
+import color from "lib/enums/color";
+import NavBar from "../components/navbar";
+import Login from "../components/login";
 
-enum color {
-  black = "000000",
-  white = "ffffff",
-  transparent = "0",
-}
+import { useAuthState, useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+
+
 function reduce() {
+  let [user, loading, error] = useAuthState(getAuth());
+  useEffect(() => {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log({ uid });
+      } else {
+        console.log("no user");
+      }
+    });
+  }, []);
   const [state, setState] = useState({
     file: null,
   });
@@ -123,15 +137,33 @@ function reduce() {
       });
     });
   };
-  let finalFormat = ["jpeg", "jpg", "png", "webp", "heif", "gif", "tiff", "svg", "avif","heic"];
+  let finalFormat = ["jpeg", "jpg", "png", "webp", "heif", "gif", "tiff", "svg", "avif", "heic"];
+  if (loading) {
+    return (
+      <div>
+        <p>Initialising User...</p>
+      </div>
+    );
+  }
+  // if (error) {
+  //   return (
+  //     <div>
+  //     </div>
+  //   );
+  // }
+
+
   return (
     <div>
+      <NavBar />
       <button onClick={login}> Login </button>
       <button onClick={logout}> Logout </button>
+      <div>{user?.displayName}</div>
+
       {/* <div className="flex flex-col items-center justify-center min-h-screen py-2">
       </div> */}
       {/* <Sidebar /> */}
-
+      <Login />
       {/* create a div with purple  color */}
       <div
         title="ss"
@@ -345,6 +377,7 @@ function reduce() {
       </div>
     </div>
   );
+
 }
 
 export default reduce;
